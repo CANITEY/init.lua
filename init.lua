@@ -1,0 +1,5 @@
+require("keymaps")
+require("customs")
+require("lazynvim")
+require("colorscheme")
+require("autocommands")
