@@ -14,11 +14,11 @@ return {
                filetypes = {}, -- Specify which filetypes get the contrasted (darker) background
             },
 
-            styles = { -- Give comments style such as bold, italic, underline etc.
+            styles = { -- Give comments style such as bold, italic, underline, undercurl etc.
             comments = {  italic = true },
-            strings = {  bold = true },
+            strings = {  --[[ bold = true ]] },
             keywords = { --[[ underline = true ]] },
-            functions = { bold = true --[[, undercurl = true ]] },
+            functions = { bold = true, --[[ undercurl = true ]] },
             variables = {},
             operators = {},
             types = {},
