@@ -18,7 +18,7 @@ return {
             comments = {  italic = true },
             strings = {  bold = true },
             keywords = { --[[ underline = true ]] },
-            functions = { bold = true, undercurl = true },
+            functions = { bold = true --[[, undercurl = true ]] },
             variables = {},
             operators = {},
             types = {},
