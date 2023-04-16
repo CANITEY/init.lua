@@ -6,7 +6,7 @@ return {
          require('material').setup({
 
             contrast = {
-               terminal = false, -- Enable contrast for the built-in terminal
+               terminal = true, -- Enable contrast for the built-in terminal
                sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
                floating_windows = false, -- Enable contrast for floating windows
                cursor_line = true, -- Enable darker background for the cursor line
@@ -50,7 +50,7 @@ return {
          borders = false, -- Disable borders between verticaly split windows
          background = false, -- Prevent the theme from setting the background (NeoVim then uses your terminal background)
          term_colors = false, -- Prevent the theme from setting terminal colors
-         eob_lines = false -- Hide the end-of-buffer lines
+         eob_lines = true -- Hide the end-of-buffer lines
       },
 
       high_visibility = {
@@ -58,7 +58,7 @@ return {
          darker = false -- Enable higher contrast text for darker style
       },
 
-      lualine_style = "stealth", -- Lualine style ( can be 'stealth' or 'default' )
+      lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
 
       async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
 
