@@ -1,4 +1,4 @@
-vim.g.material_style = "deep ocean"
+vim.g.material_style = "darker"
 return {
    {
       'marko-cerovac/material.nvim',

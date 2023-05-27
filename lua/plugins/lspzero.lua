@@ -18,7 +18,8 @@ return {
             {'hrsh7th/cmp-nvim-lua'}, 
             -- Snippets
             {'L3MON4D3/LuaSnip'},             -- Required
-            {"rafamadriz/friendly-snippets"},
+            {'rafamadriz/friendly-snippets'},
+            { 'ray-x/lsp_signature.nvim' },
 		},
 		config = function()
 
@@ -34,6 +35,12 @@ return {
 					}
 				}
 			})
+
+            local cfg = {} -- lsp_signature config
+            require "lsp_signature".setup()
+
+
+
 
 			local cmp = require('cmp')
 			local cmp_select = {behavior = cmp.SelectBehavior.Select}
