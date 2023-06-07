@@ -25,15 +25,6 @@ return {
 			local lsp = require("lsp-zero")
 			local luasnip = require("luasnip")
 			lsp.preset("recommended")
-			lsp.configure('lua-language-server', {
-				settings = {
-					Lua = {
-						diagnostics = {
-							globals = { 'vim' }
-						}
-					}
-				}
-			})
 
             local cfg = {
                 bind = true,
