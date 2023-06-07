@@ -1,7 +1,7 @@
 return {
 	{
 		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v1.x',
+		branch = 'v2.x',
 		dependencies = {
 			-- LSP Support
 			{'neovim/nvim-lspconfig'},             -- Required
@@ -11,18 +11,17 @@ return {
 			-- Autocompletion
 			{'hrsh7th/nvim-cmp'},         -- Required
             {'hrsh7th/cmp-nvim-lsp'},     -- Required
-            {'hrsh7th/cmp-nvim-lsp'},     -- Required
             {'hrsh7th/cmp-buffer'},       -- Optional
             {'hrsh7th/cmp-path'},         -- Optional
             {'saadparwaiz1/cmp_luasnip'}, -- Optional
-            {'hrsh7th/cmp-nvim-lua'}, 
+            {'hrsh7th/cmp-nvim-lua'},
             -- Snippets
             {'L3MON4D3/LuaSnip'},             -- Required
             {'rafamadriz/friendly-snippets'},
-            { 'ray-x/lsp_signature.nvim' },
+            {'ray-x/lsp_signature.nvim'},
+            {'onsails/lspkind.nvim'},
 		},
 		config = function()
-
 			local lsp = require("lsp-zero")
 			local luasnip = require("luasnip")
 			lsp.preset("recommended")
@@ -36,11 +35,38 @@ return {
 				}
 			})
 
-            local cfg = {} -- lsp_signature config
-            require "lsp_signature".setup()
-
-
-
+            local cfg = {
+                bind = true,
+                doc_lines = 0,
+                max_height = 4,
+                hint_prefix = "",
+                handler_opts = {
+                        border = "rounded"   -- double, rounded, single, shadow, none, or a table of borders
+                      },
+                floating_window = false,
+                toggle_key = '<C-k>',
+                hint_enable = false,
+                floating_window_off_x = 1, -- adjust float windows x position.
+                floating_window_off_y = 0,
+--                floating_window_off_y = function() -- adjust float windows y position. e.g. set to -2 can make floating window move up 2 lines
+--                    local linenr = vim.api.nvim_win_get_cursor(0)[1] -- buf line number
+--                    local pumheight = vim.o.pumheight
+--                    local winline = vim.fn.winline() -- line number in the window
+--                    local winheight = vim.fn.winheight(0)
+--
+--                    -- window top
+--                    if winline - 1 < pumheight then
+--                        return pumheight
+--                    end
+--
+--                    -- window bottom
+--                    if winheight - winline < pumheight then
+--                        return -pumheight
+--                    end
+--                    return 0
+--                end,
+            } -- lsp_signature config
+            require "lsp_signature".setup(cfg)
 
 			local cmp = require('cmp')
 			local cmp_select = {behavior = cmp.SelectBehavior.Select}
@@ -85,6 +111,10 @@ return {
 
 
             cmp.setup({
+                sources = {
+                    { name = 'nvim_lua' },
+                    { name = 'nvim_lsp' }
+                },
                 preselect = cmp.PreselectMode.Item,
                 completion = {
                     completeopt = 'menu,menuone,noinsert'
@@ -101,6 +131,12 @@ return {
 					completeopt = 'menu,menuone,noinsert,noselect'
 				},
 			})
+
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+            require'lspconfig'.clangd.setup {
+              capabilities = capabilities,
+            }
 
 			lsp.set_preferences({
 				suggest_lsp_servers = false,
@@ -125,6 +161,28 @@ return {
 				virtual_text = true
 			})
 
+            cmp.setup({
+              formatting = {
+                fields = {'abbr', 'kind', 'menu'},
+                format = require('lspkind').cmp_format({
+                  mode = 'symbol_text', -- show only symbol annotations
+                  maxwidth = 25, -- prevent the popup from showing more than provided characters
+                  ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+                })
+              },
+              format = function(entry, item)
+                  local menu_icon = {
+                      nvim_lsp = 'λ',
+                      luasnip = '⋗',
+                      buffer = 'Ω',
+                      path = '🖫',
+                      nvim_lua = 'Π',
+                  }
+
+                  item.menu = menu_icon[entry.source.name]
+                  return item
+              end,
+          })
 		end
 	}
 }
