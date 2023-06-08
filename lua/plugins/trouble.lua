@@ -2,9 +2,9 @@
 
 return {
     'folke/trouble.nvim',
-    event = "BufEnter",
+    event = "BufAdd",
     keys = {
-        { "<leader>t","<CMD>TroubleToggle<CR>"},
+        { "<leader>tr","<CMD>TroubleToggle<CR>"},
     },
     opts = {
 
