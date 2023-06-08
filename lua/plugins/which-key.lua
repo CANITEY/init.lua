@@ -4,16 +4,14 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        init = function()
-            vim.o.timeout = true
-            vim.o.timeoutlen = 100
-        end,
         opts = {
             window = {
                 border = "single", -- none, single, double, shadow
             }
         },
-        config = function ()
+        init = function ()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 150
             local which_key = require("which-key")
             which_key.register(
             {
@@ -42,5 +40,4 @@ return {
 
     end
     }
-
 }
