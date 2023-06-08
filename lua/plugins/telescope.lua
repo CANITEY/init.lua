@@ -6,9 +6,13 @@ return {
         { "<C-r>","<CMD>Telescope registers<CR>", mode = "i" },
         { "<leader>tb","<CMD>Telescope builtin<CR>"},
         { "<leader>tg","<CMD>Telescope live_grep<CR>"},
+        { "<leader>u","<CMD>Telescope undo<CR>"},
     },
     cmd = { "Telescope" },
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        'debugloop/telescope-undo.nvim',
+    },
     config = function()
         local builtin = require('telescope.builtin')
         local themes = require('telescope.themes')
@@ -35,7 +39,14 @@ return {
                 extensions_list = { "themes", "terms" },
                 border = {},
                 selection_strategy = "reset",
-            }
+            },
+            extensions = {
+                undo = {
+                    -- telescope-undo.nvim config, see below
+                },
+            },
         })
+        require("telescope").load_extension("undo")
+        vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
     end
 }
