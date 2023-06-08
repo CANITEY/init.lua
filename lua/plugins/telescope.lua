@@ -42,7 +42,11 @@ return {
             },
             extensions = {
                 undo = {
-                    -- telescope-undo.nvim config, see below
+                    mappings = {
+        i = {
+          ["<cr>"] = require("telescope-undo.actions").restore,
+        },
+      },
                 },
             },
         })
