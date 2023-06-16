@@ -10,7 +10,7 @@ return {
             build = function()
                 pcall(vim.cmd, 'MasonUpdate')
             end,
-            config = function ()
+            config = function()
                 require("mason").setup({
                     ui = {
                         icons = {
@@ -33,7 +33,7 @@ return {
         { 'hrsh7th/cmp-nvim-lsp' },
         { 'L3MON4D3/LuaSnip' },
         { 'onsails/lspkind.nvim' },
-        {'ray-x/lsp_signature.nvim'},
+        { 'ray-x/lsp_signature.nvim' },
     },
     config = function()
         -- initializing
@@ -43,6 +43,11 @@ return {
         })
         lsp.on_attach(function(client, bufnr)
             lsp.default_keymaps({ buffer = bufnr })
+            -- formate on keybinding
+            local opts = { buffer = bufnr }
+            vim.keymap.set({ 'n', 'x' }, '<F3>', function()
+                vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+            end, opts)
         end)
 
         -- icons on diagnostics
@@ -51,20 +56,28 @@ return {
             warn = '▲',
             hint = '⚑',
             info = '»'
-          })
+        })
 
         -- (Optional) Configure lua language server for neovim
         require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
         lsp.setup()
+        local lspkind = require('lspkind')
         -- end initializing
 
         -- cmp configuration
         local cmp = require('cmp')
-        local cmp_select = {behavior = cmp.SelectBehavior.Select}
+        local cmp_select = { behavior = cmp.SelectBehavior.Select }
         local cmp_action = require('lsp-zero').cmp_action()
         local luasnip = require("luasnip")
         require('luasnip.loaders.from_vscode').lazy_load()
 
+        -- If you want insert `(` after select function or method item
+        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+        local cmp = require('cmp')
+        cmp.event:on(
+            'confirm_done',
+            cmp_autopairs.on_confirm_done()
+        )
         cmp.setup({
             sources = {
                 { name = 'path' },
@@ -77,50 +90,51 @@ return {
             window = {
                 completion = cmp.config.window.bordered('double'),
                 documentation = cmp.config.window.bordered(),
-              },
+            },
             -- replace text on selection
-              preselect = cmp.PreselectMode.None,
-              completion = {
-                  completeopt = 'menu,menuone,noinsert'
-              },
+            preselect = cmp.PreselectMode.None,
+            completion = {
+                completeopt = 'menu,menuone,noinsert'
+            },
             -- key mappings
             mapping = {
-                ['<CR>'] = cmp.mapping.confirm({select = false}),
-                ['<C-y>'] = cmp.mapping.confirm({select = false}),
-                ['<C-p>'] = cmp.mapping.select_prev_item({cmp_select}),
-				['<C-n>'] = cmp.mapping.select_next_item({cmp_select}),
+                ['<CR>'] = cmp.mapping.confirm({ select = false }),
+                ['<C-y>'] = cmp.mapping.confirm({ select = false }),
+                ['<C-p>'] = cmp.mapping.select_prev_item({ cmp_select }),
+                ['<C-n>'] = cmp.mapping.select_next_item({ cmp_select }),
                 -- end replace text on selection
                 ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-				["<C-f>"] = cmp.mapping.scroll_docs(4),
+                ["<C-f>"] = cmp.mapping.scroll_docs(4),
                 ['<C-Space>'] = cmp.mapping.complete(),
                 ['<TAB>'] = cmp.mapping(function(fallback)
-					if luasnip.expand_or_jumpable() then
-						luasnip.expand_or_jump()
-					else
-						fallback()
-					end
-				end),
-                ['<S-TAB>'] = cmp.mapping(function (fallback)
-					if luasnip.jumpable(-1) then
-						luasnip.jump(-1)
-					else
-						fallback()
-					end
-				end
-				)
+                    if luasnip.expand_or_jumpable() then
+                        luasnip.expand_or_jump()
+                    else
+                        fallback()
+                    end
+                end),
+                ['<S-TAB>'] = cmp.mapping(function(fallback)
+                    if luasnip.jumpable(-1) then
+                        luasnip.jump(-1)
+                    else
+                        fallback()
+                    end
+                end
+                )
             },
             -- end key mappings
             formatting = {
-                fields = {'kind', 'abbr', 'menu'},
-                format = require('lspkind').cmp_format({
-                  mode = 'symbol', -- show only symbol annotations symbol_text|| text
-                  maxwidth = 15, -- prevent the popup from showing more than provided characters
-                  ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
-                })
+                fields = { "kind", "abbr", "menu" },
+                format = function(entry, vim_item)
+                  local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+                  local strings = vim.split(kind.kind, "%s", { trimempty = true })
+                  kind.kind = " " .. (strings[1] or "") .. " "
+                  kind.menu = "    (" .. (strings[2] or "") .. ")"
+                  return kind
+                end,
             }
         })
         -- end cmp configuration
-
         -- lsp signature config
         -- TOOD
     end
