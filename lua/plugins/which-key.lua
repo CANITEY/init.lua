@@ -21,7 +21,7 @@ return {
                         f = {"Find File"},
                         b = {"Built-ins"},
                         g = {"Live Grep"},
-                        r = {"Registers"},
+                        r = {"Trouble"},
                     }
                 },
                 u = "Undo Tree",
