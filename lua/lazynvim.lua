@@ -12,7 +12,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 require("lazy").setup("plugins", {
-    install = { colorscheme = { "tokyonight" } },
     checker = { enabled = true },
     performance = {
         rtp = {
