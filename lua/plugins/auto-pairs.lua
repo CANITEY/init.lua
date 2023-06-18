@@ -1,7 +1,21 @@
 return {
     "windwp/nvim-autopairs",
+    event = "InsertEnter",
     dependencies = "windwp/nvim-ts-autotag",
-    init = function ()
+    config = function()
+        require('nvim-ts-autotag').setup()
+        require("nvim-autopairs").setup {
+            fast_wrap = {
+                map = '<M-e>',
+                chars = { '{', '[', '(', '"', "'" },
+                pattern = [=[[%'%"%>%]%)%}%,]]=],
+                end_key = '$',
+                keys = 'qwertyuiopzxcvbnmasdfghjkl',
+                check_comma = true,
+                highlight = 'Search',
+                highlight_grey='Comment'
+            },
+        }
         local npairs = require'nvim-autopairs'
         local Rule   = require'nvim-autopairs.rule'
 
@@ -27,20 +41,5 @@ return {
                 :use_key(bracket[2])
             }
         end
-    end,
-    config = function()
-        require('nvim-ts-autotag').setup()
-        require("nvim-autopairs").setup {
-            fast_wrap = {
-                map = '<M-e>',
-                chars = { '{', '[', '(', '"', "'" },
-                pattern = [=[[%'%"%>%]%)%}%,]]=],
-                end_key = '$',
-                keys = 'qwertyuiopzxcvbnmasdfghjkl',
-                check_comma = true,
-                highlight = 'Search',
-                highlight_grey='Comment'
-            },
-        }
     end
 }
