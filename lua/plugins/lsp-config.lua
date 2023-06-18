@@ -16,6 +16,12 @@ return {
             lsp.preset({
                 name = 'recommended',
             })
+            lsp.setup_nvim_cmp({
+                preselect = 'none',
+                completion = {
+                    completeopt = 'menu,menuone,noinsert,noselect'
+                },
+            })
             lsp.on_attach(function(client, bufnr)
                 lsp.default_keymaps({ buffer = bufnr })
                 -- formate on keybinding
