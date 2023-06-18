@@ -1,7 +1,6 @@
 return {
    {
       "NvChad/nvterm",
-      lazy = false,
       keys = {
          { "<leader>h", function () require("nvterm.terminal").toggle("horizontal") end, "terminal" },
          { "<leader>v", function () require("nvterm.terminal").toggle("vertical") end, "terminal" },

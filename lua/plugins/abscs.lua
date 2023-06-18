@@ -1,6 +1,7 @@
 return {
    {
-      'Abstract-IDE/Abstract-cs'
+      'Abstract-IDE/Abstract-cs',
+      lazy = true,
    }
 
 
