@@ -2,7 +2,7 @@
 
 return {
     'folke/trouble.nvim',
-    event = "BufAdd",
+    event = {'BufReadPre', 'BufNewFile'},
     keys = {
         { "<leader>tr","<CMD>TroubleToggle<CR>"},
     },
