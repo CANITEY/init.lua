@@ -17,6 +17,11 @@ return {
         local builtin = require('telescope.builtin')
         local themes = require('telescope.themes')
         require('telescope').setup({
+            pickers = {
+                colorscheme = {
+                    enable_preview = true
+                }
+            },
             defaults = {
                 layout_strategy='horizontal',
                 layout_config={
@@ -35,7 +40,7 @@ return {
                     "--smart-case",
                 },
                 prompt_prefix = "   ",
-                initial_mode = "insert",
+                initial_mode = "normal",
                 extensions_list = { "themes", "terms" },
                 border = {},
                 selection_strategy = "reset",
@@ -43,10 +48,10 @@ return {
             extensions = {
                 undo = {
                     mappings = {
-        i = {
-          ["<cr>"] = require("telescope-undo.actions").restore,
-        },
-      },
+                        i = {
+                            ["<cr>"] = require("telescope-undo.actions").restore,
+                        },
+                    },
                 },
             },
         })

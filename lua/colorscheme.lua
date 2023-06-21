@@ -8,4 +8,4 @@
 -- vim.cmd("colorscheme oxocarbon")
 -- vim.cmd("colorscheme palenight")
 -- vim.cmd("colorscheme rose-pine")
-vim.cmd("colorscheme material")
+vim.cmd("colorscheme onedark")
