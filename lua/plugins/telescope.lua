@@ -7,6 +7,7 @@ return {
         { "<leader>tb","<CMD>Telescope builtin<CR>"},
         { "<leader>tg","<CMD>Telescope live_grep<CR>"},
         { "<leader>u","<CMD>Telescope undo<CR>"},
+        { "<leader>tc","<CMD>lua require('telescope.builtin').colorscheme({enable_preview = true,})<CR>", "colorschemes"},
     },
     cmd = { "Telescope" },
     dependencies = {
@@ -19,7 +20,7 @@ return {
         require('telescope').setup({
             pickers = {
                 colorscheme = {
-                    enable_preview = true
+                    enable_preview = true,
                 }
             },
             defaults = {
@@ -41,15 +42,14 @@ return {
                 },
                 prompt_prefix = "   ",
                 initial_mode = "normal",
-                extensions_list = { "themes", "terms" },
                 border = {},
                 selection_strategy = "reset",
             },
             extensions = {
                 undo = {
                     mappings = {
-                        i = {
-                            ["<cr>"] = require("telescope-undo.actions").restore,
+                        n = {
+                            ["<CR>"] = require("telescope-undo.actions").restore,
                         },
                     },
                 },
