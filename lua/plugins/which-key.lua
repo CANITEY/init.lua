@@ -21,6 +21,7 @@ return {
                             b = {"Built-ins"},
                             g = {"Live Grep"},
                             r = {"Trouble"},
+                            c = {"colorschemes"},
                         }
                     },
                     u = "Undo Tree",
