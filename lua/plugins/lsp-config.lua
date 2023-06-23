@@ -85,7 +85,6 @@ return {
 
             },
             { 'onsails/lspkind.nvim' },
-            { 'hrsh7th/cmp-nvim-lsp-signature-help' },
             { 'ray-x/lsp_signature.nvim' },
             { 'hrsh7th/cmp-nvim-lua' },
         },
