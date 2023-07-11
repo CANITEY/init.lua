@@ -3,10 +3,10 @@ return {
     event = {'BufReadPre', 'BufNewFile'},
     config = function()
         require("nvim-treesitter.configs").setup {
-            highlight = {
-                -- ...
-            },
-            -- ...
+--             highlight = {
+--                 -- ...
+--             },
+--             -- ...
             rainbow = {
                 enable = true,
                 -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for

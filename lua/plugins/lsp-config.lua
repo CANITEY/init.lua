@@ -33,7 +33,7 @@ return {
 
             -- icons on diagnostics
             lsp.set_sign_icons({
-                error = 'X',
+                error = '✘',
                 warn = '▲',
                 hint = '⚑',
                 info = '»'
@@ -72,23 +72,21 @@ return {
     },
 
     -- Autocompletion
-    { 
+    {
         'hrsh7th/nvim-cmp',
         event = "InsertEnter",
         dependencies = {
             {
                 'L3MON4D3/LuaSnip',
-                dependencies = { "rafamadriz/friendly-snippets" },
-                config = function()
-                    require("luasnip.loaders.from_vscode").lazy_load()
-                end
+                build = "make install_jsregexp",
+                dependencies = { "rafamadriz/friendly-snippets","saadparwaiz1/cmp_luasnip" },
 
             },
             { 'onsails/lspkind.nvim' },
             { 'ray-x/lsp_signature.nvim' },
             { 'hrsh7th/cmp-nvim-lua' },
         },
-        config = function() 
+        config = function()
             -- cmp configuration
             local lspkind = require('lspkind')
             local cmp = require('cmp')
@@ -96,10 +94,8 @@ return {
             local cmp_action = require('lsp-zero').cmp_action()
             local luasnip = require("luasnip")
             require('luasnip.loaders.from_vscode').lazy_load()
-
             -- If you want insert `(` after select function or method item
             local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-            local cmp = require('cmp')
             cmp.event:on(
             'confirm_done',
             cmp_autopairs.on_confirm_done()
@@ -134,7 +130,7 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<TAB>'] = cmp.mapping(function(fallback)
-                        if luasnip.expand_or_jumpable() then
+                        if luasnip.expand_or_locally_jumpable() then
                             luasnip.expand_or_jump()
                         else
                             fallback()
