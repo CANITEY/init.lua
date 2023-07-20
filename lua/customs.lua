@@ -28,3 +28,8 @@ vim.opt.expandtab = true
 vim.opt.showmode = false
 vim.wo.fillchars = 'eob: ,vert:|'
 vim.cmd[[set clipboard+=unnamedplus]]
+vim.cmd[[
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
+]]

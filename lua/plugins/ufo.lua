@@ -1,6 +1,8 @@
 -- ufo -> ultra fold in neovim
 return {
     'kevinhwang91/nvim-ufo',
+    event = {'BufReadPre', 'BufNewFile'},
+
     dependencies = {
         'kevinhwang91/promise-async',
                  {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
