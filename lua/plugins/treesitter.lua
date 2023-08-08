@@ -1,7 +1,6 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter', cmd = 'TSUpdate',
-        dependencies = 'p00f/nvim-ts-rainbow',
         event = {'BufReadPre', 'BufNewFile'},
         config = function ()
             require'nvim-treesitter.configs'.setup {

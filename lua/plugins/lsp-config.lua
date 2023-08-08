@@ -37,6 +37,25 @@ return{
             local cmp = require('cmp')
             -- local cmp_action = require('lsp-zero.cmp').action()
             local luasnip = require("luasnip")
+            local s = luasnip.snippet
+            local sn = luasnip.snippet_node
+            local t = luasnip.text_node
+            local i = luasnip.insert_node
+            local f = luasnip.function_node
+            local c = luasnip.choice_node
+            local d = luasnip.dynamic_node
+            local r = luasnip.restore_node
+
+            luasnip.add_snippets("go", {
+                s("iferr", {
+                    t({"if err != nil {", "\tpanic(err)","}"})
+                }),
+                s("decover", {
+                    t({"defer func() {", "\tif r := recover(); r != nil {","\t\t"}),
+                    i(1, "handling method"),
+                    t({"","\t}","}()"})
+                })
+            })
             require('luasnip.loaders.from_vscode').lazy_load()
             local cmp_action = require('lsp-zero.cmp').action()
             local cmp_select_opts = {behavior = cmp.SelectBehavior.Insert}
@@ -70,16 +89,9 @@ return{
                     documentation = cmp.config.window.bordered(),
                 },
                 -- key mappings
-                mapping = {
+                mapping = cmp.mapping.preset.insert({
                     ['<CR>'] = cmp.mapping.confirm({ select = false }),
                     ['<C-y>'] = cmp.mapping.confirm({ select = false }),
-                    ['<C-p>'] = cmp.mapping(function()
-                        if cmp.visible() then
-                            cmp.select_prev_item(cmp_select_opts)
-                        else
-                            cmp.complete()
-                        end
-                    end),
                     ['<C-n>'] = cmp.mapping(function()
                         if cmp.visible() then
                             cmp.select_next_item(cmp_select_opts)
@@ -87,26 +99,34 @@ return{
                             cmp.complete()
                         end
                     end),
+                    ['<C-p>'] = cmp.mapping(function()
+                        if cmp.visible() then
+                            cmp.select_prev_item(cmp_select_opts)
+                        else
+                            cmp.complete()
+                        end
+                    end),
                     -- end replace text on selection
-                    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<TAB>'] = cmp.mapping(function(fallback)
                         if luasnip.expand_or_locally_jumpable() then
-                            cmp_action.luasnip_jump_forward()
+                            -- cmp_action.luasnip_jump_forward()
+                            luasnip.expand_or_jump()
                         else
                             fallback()
                         end
                     end),
                     ['<S-TAB>'] = cmp.mapping(function(fallback)
                         if luasnip.jumpable(-1) then
-                            cmp_action.luasnip_jump_backward()
+                            luasnip.jump(-1)
                         else
                             fallback()
                         end
                     end
                     )
-                },
+                }),
             })
             local cmp_autopairs = require('nvim-autopairs.completion.cmp')
             cmp.event:on(
