@@ -41,14 +41,14 @@ return {
                     "--smart-case",
                 },
                 prompt_prefix = "   ",
-                initial_mode = "normal",
+                initial_mode = "insert",
                 border = {},
                 selection_strategy = "reset",
             },
             extensions = {
                 undo = {
                     mappings = {
-                        n = {
+                        i = {
                             ["<CR>"] = require("telescope-undo.actions").restore,
                         },
                     },
