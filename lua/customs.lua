@@ -1,16 +1,16 @@
 -- to define my clipboard in advance to make neovim faster
-vim.g.clipboard = {
- name = "xsel",
- copy = {
-  ["+"] = "xsel --nodetach -i -b",
-  ["*"] = "xsel --nodetach -i -p",
- },
- paste = {
-  ["+"] = "xsel  -o -b",
-  ["*"] = "xsel  -o -b",
- },
- cache_enabled = 1,
-}
+-- vim.g.clipboard = {
+--  name = "xsel",
+--  copy = {
+--   ["+"] = "xsel --nodetach -i -b",
+--   ["*"] = "xsel --nodetach -i -p",
+--  },
+--  paste = {
+--   ["+"] = "xsel  -o -b",
+--   ["*"] = "xsel  -o -b",
+--  },
+--  cache_enabled = 1,
+-- }
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.swapfile = false
