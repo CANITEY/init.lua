@@ -65,6 +65,20 @@ return {
             { prefix = "<leader>" },
             { mode = 'n' }
             )
+            which_key.register({
+                h = {
+                    name = "harpoon",
+                    {
+                        a = { '<cmd>lua require("harpoon.mark").add_file()<cr>', 'add file' },
+                        q = { '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>', 'toggle quick menu' },
+                        n = { '<cmd>lua require("harpoon.ui").nav_next()<cr>', 'next harpoon' },
+                        N = { '<cmd>lua require("harpoon.ui").nav_prev()<cr>', 'previous harpoon' },
+                    }
+                }
+            },
+            { prefix = "<leader>" },
+            { mode = 'n' }
+            )
     end
     }
 }
