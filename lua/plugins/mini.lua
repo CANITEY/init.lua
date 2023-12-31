@@ -9,6 +9,7 @@ return {
                 -- Symbol priority. Increase to display on top of more symbols.
                 priority = 2,
             },
+            symbol = "│",
         })
     end
 }
