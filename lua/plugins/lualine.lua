@@ -11,6 +11,7 @@ return {
         dependencies = { "kyazdani42/nvim-web-devicons"},
         config = function()
             require('lualine').setup {
+                extensions = {'trouble', 'oil'},
                 options = {
                     icons_enabled = true,
                     theme = 'auto',
@@ -46,7 +47,13 @@ return {
                     lualine_z = {}
                 },
                 tabline = {
-                    lualine_a = {"buffers"},
+                    lualine_a = {
+                        {
+                            "buffers", 
+                            show_filename_only = false,
+                            use_mode_colors = true,
+                        }
+                    },
                     lualine_b = {"branch"},
                     lualine_c = {},
                     lualine_x = {},
