@@ -7,6 +7,7 @@ return {
       config = function()
          require("nvim-tree").setup({
             disable_netrw = false,
+            update_cwd = true,
             sort_by = "case_sensitive",
             view = {
             centralize_selection = true,
