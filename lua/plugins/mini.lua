@@ -1,6 +1,7 @@
 return {
     'echasnovski/mini.nvim',
-    event = {'BufReadPre', 'BufNewFile'},
+    -- event = {'BufReadPre', 'BufNewFile'},
+    lazy = true,
     config = function()
         require('mini.indentscope').setup({
             draw = {
@@ -10,6 +11,9 @@ return {
                 priority = 2,
             },
             symbol = "│",
+            options = {
+                border = 'bottom',
+            }
         })
     end
 }
