@@ -148,6 +148,8 @@ return{
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             {"hrsh7th/cmp-nvim-lsp-signature-help"},
+            { 'nvimtools/none-ls.nvim' },
+            { 'jay-babu/mason-null-ls.nvim' },
             {
                 'williamboman/mason.nvim',
                 build = function()
@@ -159,15 +161,24 @@ return{
             -- This is where all the LSP shenanigans will live
 
             local lsp = require('lsp-zero')
-
-            lsp.on_attach(function(client, bufnr)
-                lsp.default_keymaps({buffer = bufnr})
-                local opts = { buffer = bufnr }
-                vim.keymap.set({ 'n', 'x' }, '<F3>', function()
-                    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-                end, opts)
-
-            end)
+            lsp.format_mapping('<F3>', {
+                format_opts = {
+                    async = false,
+                    timeout_ms = 10000,
+                },
+                servers = {
+                    ['null-ls'] = {'python', 'javascript', 'cpp', 'c', 'go', 'vue', 'css', 'html', 'lua'} 
+                }
+            }
+            )
+            -- lsp.on_attach(function(client, bufnr)
+            --     lsp.default_keymaps({buffer = bufnr})
+            --     local opts = { buffer = bufnr }
+            --     vim.keymap.set({ 'n', 'x' }, '<F3>', function()
+            --         vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+            --     end, opts)
+            --
+            -- end)
             -- (Optional) Configure lua language server for neovim
             require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
@@ -184,6 +195,24 @@ return{
             })
 
             lsp.setup()
+            require('mason-null-ls').setup({
+                ensure_installed = nil,
+                automatic_installation = true,
+                handlers = {},
+            }    
+            )
+            local null_ls = require('null-ls')
+            local null_opts = lsp.build_options('null-ls', {})
+
+            null_ls.setup({
+                on_attach = function(client, bufnr)
+                    null_opts.on_attach(client, bufnr)
+                end,
+                sources = {
+                    null_ls.builtins.formatting.astyle,
+                    null_ls.builtins.code_actions.gomodifytags
+                }
+            })
         end
     }
 }
