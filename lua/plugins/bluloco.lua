@@ -1,6 +1,7 @@
+-- theme
 return {
   'uloco/bluloco.nvim',
-  lazy = false,
+  lazy = true,
   priority = 1000,
   dependencies = { 'rktjmp/lush.nvim' },
 }

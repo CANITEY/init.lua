@@ -1,4 +1,5 @@
 return {
     "akinsho/horizon.nvim",
-    version = "*"
+    version = "*",
+    lazy = true,
 }
