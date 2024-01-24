@@ -9,17 +9,18 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         dependencies = { "kyazdani42/nvim-web-devicons"},
+        Lazy = true,
         config = function()
             require('lualine').setup {
-                extensions = {'trouble', 'oil'},
+                extensions = {'trouble', 'oil', 'aerial'},
                 options = {
                     icons_enabled = true,
                     theme = 'auto',
                     component_separators = { left = '', right = ''},
                     section_separators = { left = '', right = ''},
                     disabled_filetypes = {
-                        statusline = {},
-                        winbar = {},
+                        statusline = { 'dashboard', 'NvimTree', 'NvTerm' },
+                        winbar = { 'dashboard', 'NvimTree', 'NvTerm' }
                     },
                     ignore_focus = {},
                     always_divide_middle = true,
@@ -60,9 +61,15 @@ return {
                     lualine_y = {"tabs"},
                     lualine_z = {vimIcon}
                 },
-                winbar = {},
+                winbar = {
+                    lualine_b = {
+                        '%F', 
+                        { 
+                            "aerial", 
+                        },
+                    }
+                },
                 inactive_winbar = {},
-                extensions = {}
             }
         end
 
