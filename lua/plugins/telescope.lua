@@ -47,12 +47,7 @@ return {
             },
             extensions = {
                 undo = {
-                    mappings = {
-                        i = {
-                            ["<cr>"] = require("telescope-undo.actions").yank_additions,
-                            ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
-                            ["<C-cr>"] = require("telescope-undo.actions").restore,                        },
-                        },
+                    initial_mode = "normal",
                 },
             },
         })
